@@ -1,6 +1,7 @@
 using Uno;
 using Uno.UX;
 using Uno.Platform;
+using Uno.Threading;
 using Uno.Collections;
 using Uno.Compiler.ExportTargetInterop;
 using Fuse;
@@ -60,6 +61,9 @@ namespace Firebase.Notifications
             AddMember(new NativeFunction("clearBadgeNumber", ClearBadgeNumber));
             AddMember(new NativeFunction("clearAllNotifications", ClearAllNotifications));
             AddMember(new NativeFunction("getFCMToken", GetFCMToken));
+            AddMember(new NativeFunction("subscribeToTopic", SubscribeToTopic));
+            AddMember(new NativeFunction("unsubscribeFromTopic", UnsubscribeFromTopic));
+
             _onRegistrationSucceedediOS = new NativeEvent("onRegistrationSucceedediOS");
             AddMember(_onRegistrationSucceedediOS);
 
@@ -116,6 +120,30 @@ namespace Firebase.Notifications
         public object ClearBadgeNumber(Context context, object[] args)
         {
             Firebase.Notifications.NotificationService.ClearBadgeNumber();
+            return null;
+        }
+
+        /**
+           @scriptmethod subscribeToTopic
+
+           Subscribes to topic in the background.
+        */
+        public object SubscribeToTopic(Context context, object[] args)
+        {
+            var topicName = (string)args[0];
+            Firebase.Notifications.NotificationService.SubscribeToTopic(topicName);
+            return null;
+        }
+
+        /**
+           @scriptmethod unsubscribeFromTopic
+
+           Unsubscribes from topic in the background.
+        */
+        public object UnsubscribeFromTopic(Context context, object[] args)
+        {
+            var topicName = (string)args[0];
+            Firebase.Notifications.NotificationService.UnsubscribeFromTopic(topicName);
             return null;
         }
 
