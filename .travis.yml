@@ -7,3 +7,5 @@ before_script:
 
 script:
   - uno doctor
+  - yes | sdkmanager --licenses
+  - fuse build AuthExample/ -tAndroid
